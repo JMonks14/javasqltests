@@ -64,5 +64,26 @@ public class Customer {
 		return "INSERT INTO Customers(first_name, last_name, username, password) Values ('" + this.getFirst_name() + 
 				"','" + this.getLast_name() + "','" + this.getUsername() + "','" + this.getPassword() + "')";
 	}
-
+	
+	String upString(String element, String newValue) {
+		
+		switch (element) {
+		case "first_name":
+			return "UPDATE Customers SET first_name='" + newValue + "' WHERE username='" + this.getUsername() +"'";
+		case "last_name":
+			return "UPDATE Customers SET last_name='" + newValue + "' WHERE username='" + this.getUsername() +"'";
+		case "username":
+			return "UPDATE Customers SET username='" + newValue + "' WHERE username='" + this.getUsername() +"'";
+		case "password":
+			return "UPDATE Customers SET password='" + newValue + "' WHERE username='" + this.getUsername() +"'";
+		default:
+			return "invalid value";
+		}
+	}
+	
+	String delString() {
+		return "DELETE FROM Customers WHERE cust_ID=" + this.getID();
+	}
 }
+
+

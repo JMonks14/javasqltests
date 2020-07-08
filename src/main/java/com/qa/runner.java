@@ -28,7 +28,7 @@ public class runner {
     public static void main(String[] args) {
         Connection conn = null;
         Statement stmt = null;
-        Customer Jeff = new Customer("Jeff", "Rigdeley", "upgolfer", "iamboring");
+//        Customer Jeff = new Customer("Jeff", "Rigdeley", "upgolfer", "iamboring");
         try {
             // STEP 2: Register JDBC driver
             Class.forName("com.mysql.jdbc.Driver");
@@ -46,13 +46,15 @@ public class runner {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             
-            String sql1;
-            sql1 = Jeff.inString();
-            stmt.execute(sql1);
+//            String sql1;
+//            sql1 = Jeff.inString();
+//            stmt.execute(sql1);
     
+            
             String sql;
-            sql = "SELECT * FROM Customers";
+            sql = "SELECT * FROM Customers WHERE cust_ID=4";
             ResultSet rs = stmt.executeQuery(sql);
+            Customer thisCust = new Customer();
             
             
 
@@ -62,15 +64,58 @@ public class runner {
                 int id = rs.getInt("cust_id");
                 String first = rs.getString("first_name");
                 String last = rs.getString("last_name");
+                String username=rs.getString("username");
+                String password=rs.getString("password");
                 
+                thisCust.setID(id);
+                thisCust.setFirst_name(first);
+                thisCust.setLast_name(last);
+                thisCust.setPassword(password);
+                thisCust.setUsername(username);
+                              
 
-                // Display values
-                System.out.println("Fetching information!");
-                System.out.print("ID: " + id);
-                System.out.print(", First: " + first);
-                System.out.println(", Last: " + last);
+                  // Display values
+//                System.out.println("Fetching information!");
+//                System.out.print("ID: " + id);
+//                System.out.print(", First: " + first);
+//                System.out.println(", Last: " + last);
+//                System.out.println(", username: " + username);
             }
-//            
+//          
+            
+            
+            String sql2;
+            sql2=thisCust.delString();
+            stmt.execute(sql2);
+            
+            String sql3;
+            sql3 = "SELECT * FROM Customers";
+            ResultSet rs2 = stmt.executeQuery(sql3);
+            
+            while (rs2.next()) {
+                // Retrieve by column name
+            	Customer aCust = new Customer();
+                int id = rs2.getInt("cust_id");
+                String first = rs2.getString("first_name");
+                String last = rs2.getString("last_name");
+                String username=rs2.getString("username");
+                String password=rs2.getString("password");
+                
+                aCust.setID(id);
+                aCust.setFirst_name(first);
+                aCust.setLast_name(last);
+                aCust.setPassword(password);
+                aCust.setUsername(username);
+                
+                System.out.println("Fetching information!");
+                System.out.print("ID: " + aCust.getID());
+                System.out.print(", First: " + aCust.getFirst_name());
+                System.out.println(", Last: " + aCust.getLast_name());
+                System.out.println(", username: " + aCust.getUsername());
+            }
+            
+//            Display values
+            
             
             // STEP 6: Clean-up environment
             rs.close();
@@ -99,17 +144,17 @@ public class runner {
         System.out.println("Goodbye!");
     }// end main
 
-    public static void create(Customer customer, Connection conn) {
-        try(Statement statement = conn.createStatement()) {
+//    public static void create(Customer customer, Connection conn) {
+//        try(Statement statement = conn.createStatement()) {
+//
+//            statement.executeUpdate("INSERT INTO customers(first_name, surname, username, password) VALUES('" +
+//                customer.getFirst_name() + "','" + customer.getLast_name() + "','" + customer.getUsername() + "','" + customer.getPassword() +"')");
+//        } catch (SQLException e) {
+//            System.out.println(e.getStackTrace());
 
-            statement.executeUpdate("INSERT INTO customers(first_name, surname, username, password) VALUES('" +
-                customer.getFirst_name() + "','" + customer.getLast_name() + "','" + customer.getUsername() + "','" + customer.getPassword() +"')");
-        } catch (SQLException e) {
-            System.out.println(e.getStackTrace());
+//}
 
-}
-
-    }
+//    }
 
 }
 
